@@ -23,7 +23,7 @@ The Day Planner Application is a simple tool built with Python and Tkinter for p
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your_username/day-planner.git
+   git clone https://github.com/AbyTed/day-planner.git
    ```
 
 2. Navigate into the project directory:
