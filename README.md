@@ -75,12 +75,3 @@ Contributions are welcome! If you find any issues or have suggestions for improv
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
----
-
-### Notes:
-
-- Replace `day_planner_app.py` with the actual filename if it differs.
-- Include relevant screenshots in the `screenshots/` directory.
-- Customize the sections as per your specific implementation and preferences.
-
-This README provides an overview of the application's functionality, installation instructions, usage guidelines, and other relevant details to help users and contributors understand and use your Day Planner application effectively. Adjust it further based on additional features or specific requirements of your application.
