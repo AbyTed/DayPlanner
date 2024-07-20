@@ -1,45 +1,40 @@
-data = {
-    'khan academy':(60, 'h'),
-    'reading':(60, 'e'),
-    'break':(15),
-    
-}
-
 def day_planner(data):
     easy = []
     medium = []
     hard = []
-    for activity in data:
-        difficulty = data[activity][1]
-        PAYLOAD = (activity, data[activity][0]) 
-        if difficulty == 'h':
-            hard.append(PAYLOAD)
-        elif difficulty == 'm':
-            medium.append(PAYLOAD)
+    for activity, details in data.items():
+        time, difficulty, break_time = details
+        if activity == "break":
+            continue
+        if difficulty == "h":
+            hard.append((activity, time, difficulty, break_time))
+        elif difficulty == "m":
+            medium.append((activity, time, difficulty, break_time))
         else:
-            easy.append(PAYLOAD)
+            easy.append((activity, time, difficulty, break_time))
     
-def sort_activity(easy, medium, hard):
-    
-    pass
+    return sort_activities(easy, medium, hard)
 
-def assembler(result):
-    pass
+def sort_activities(easy, medium, hard):
+    result = {}
+    break_counter = 0
+    
+    for activities in [hard, medium, easy]:
+        for activity in sorted(activities, reverse=True):
+            result[activity[0]] = (activity[1], activity[2], activity[3])
+            break_counter += 1
+            result[f'break_{break_counter}'] = activity[3]
+    
+    return result
+
 
 def display_schedule(schedule):
-    pass
-        
-        
-        
-        
-        
-        
-
-    
-        
-        
-        
-
-if __name__ == "__main__":
-    day_planner(data)
-
+    SPACE = 8
+    lines = []
+    for items, value in schedule.items():
+        length = len(items) + SPACE + len(str(value)) + len(' minutes')
+        line = '-' * length + '\n'
+        line += f'| {items} for {value} minutes|\n'
+        line += '-' * length
+        lines.append(line)
+    return lines
