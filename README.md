@@ -29,7 +29,7 @@ The Day Planner Application is a simple tool built with Python and Tkinter for p
 2. Navigate into the project directory:
 
    ```bash
-   cd day-planner
+   cd DayPlanner
    ```
 
 3. Install dependencies (if any):
@@ -43,7 +43,7 @@ The Day Planner Application is a simple tool built with Python and Tkinter for p
 1. Run the application:
 
    ```bash
-   python day_planner_app.py
+   python main.py
    ```
 
 2. **Adding Activities**:
