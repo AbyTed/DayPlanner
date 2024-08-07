@@ -1,69 +1,30 @@
 import sqlite3
+from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
 
-# Function to create a SQLite connection
-def create_connection(db_file):
-    conn = None
-    try:
-        conn = sqlite3.connect(db_file)
-        return conn
-    except sqlite3.Error as e:
-        print(e)
-    return conn
+Base = declarative_base()
 
-# Function to create the schedule table
-def create_table(conn):
-    sql_create_schedule_table = """
-    CREATE TABLE IF NOT EXISTS schedule (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        activity_name TEXT NOT NULL,
-        time INTEGER NOT NULL,
-        difficulty TEXT NOT NULL,
-        break_time INTEGER NOT NULL
-    );
-    """
-    try:
-        c = conn.cursor()
-        c.execute(sql_create_schedule_table)
-    except sqlite3.Error as e:
-        print(e)
 
-# Function to insert a new activity into the schedule table
-def insert_activity(conn, activity_name, time, difficulty, break_time):
-    sql = """
-    INSERT INTO schedule (activity_name, time, difficulty, break_time)
-    VALUES (?, ?, ?, ?)
-    """
-    cur = conn.cursor()
-    cur.execute(sql, (activity_name, time, difficulty, break_time))
-    conn.commit()
-    return cur.lastrowid
+class ActivitySchedule(Base):
+    __tablename__ = "schedule"
 
-# Function to retrieve all activities from the schedule table
-def fetch_activities(conn):
-    cur = conn.cursor()
-    cur.execute("SELECT activity_name, time, difficulty, break_time FROM schedule")
-    rows = cur.fetchall()
-    return rows
+    name = Column(String, nullable=False, primary_key=True, unique=True)
+    time = Column(Integer, nullable=False)
+    difficulty = Column(String, nullable=False)
+    break_time = Column(Integer)
 
-# Main function to test the database operations
-def main():
-    database = r"day_planner.db"  # Path to your SQLite database file
-    conn = create_connection(database)
-    if conn is not None:
-        # Create schedule table
-        create_table(conn)
 
-        # Example: Insert activity
-        insert_activity(conn, "Study", 60, "m", 10)
+engine = create_engine("sqlite:///day_planner.db")
 
-        # Example: Fetch all activities
-        activities = fetch_activities(conn)
-        for activity in activities:
-            print(activity)
+# Create all tables in the engine
+Base.metadata.create_all(engine)
 
-        conn.close()
-    else:
-        print("Error! cannot create database connection.")
+# Create a configured "Session" class
+Session = sessionmaker(bind=engine)
 
-if __name__ == '__main__':
-    main()
+# Create a session instance
+session = Session()
+
+
+
