@@ -158,10 +158,13 @@ class DayPlannerApp:
         # Display schedule in schedule_label
         if schedule:
             schedule_text = ""
+            row = 0
             for activity in schedule:
                 activity_info = f"{activity.name} - Difficulty: {activity.difficulty}, Time: {activity.time} mins, Break: {activity.break_time} mins\n"
                 schedule_text += activity_info
-            self.schedule_label.config(text=schedule_text)
+
+                self.schedule_label.config(row=row, text=schedule_text)
+                row += 2
         else:
             self.schedule_label.config(text="No activities added yet.")
 
